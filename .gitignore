@@ -2,3 +2,4 @@ ud120-projects
 .DS_Store
 .vscode
 *.pyc
+__pycache__/
