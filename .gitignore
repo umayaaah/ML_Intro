@@ -1,3 +1,4 @@
 ud120-projects
 .DS_Store
 .vscode
+*.pyc
