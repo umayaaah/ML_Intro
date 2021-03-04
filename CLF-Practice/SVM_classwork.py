@@ -15,7 +15,9 @@ def SVM_classify(features_train, labels_train, features_test, labels_test):
 
     ########################## SVM #################################
     ### SVC creation here
-    clf = svm.SVC(kernel="linear")
+    ### Larger c => more training points correctly classified, less linear decision boundary
+    ### High Gamma => closer training points have higher influence on the boundary (ignoring points further out) - less linear
+    clf = svm.SVC(kernel="rbf", C=1)
 
     #### now your job is to fit the classifier
     #### using the training features/labels, and to
