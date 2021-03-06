@@ -1,4 +1,4 @@
-def classify(features_train, labels_train, features_test, labels_test):   
+def NB_classify(features_train, labels_train, features_test, labels_test):   
     ### import the sklearn module for GaussianNB
     ### create classifier
     ### fit the classifier on the training features and labels
