@@ -39,9 +39,9 @@ def classifySVM():
     prettyPicture(clf, features_test, labels_test)
     output_image("test.png", "png", open("test.png", "rb").read())
 
-def classifyDT(features_train, labels_train):
-    clf = DT_classify(features_train, labels_train)
+def classifyDT(features_train, labels_train, features_test, labels_test):
+    clf = DT_classify(features_train, labels_train, features_test, labels_test)
     prettyPicture(clf, features_test, labels_test)
     output_image("tree.png", "png", open("test.png", "rb").read())
 
-classifyDT(features_train, labels_train)
+classifyDT(features_train, labels_train, features_test, labels_test)
