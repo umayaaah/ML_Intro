@@ -19,18 +19,21 @@ from poi_email_addresses import poiEmails
 
 import pickle
 
-enron_data = pickle.load(open("../../ud120-projects/final_project/final_project_dataset.pkl", "rb"))
-# print(enron_data)
-
-def data_info():
+def data_info(enron_data):
     num_people = len(enron_data)
     print("Size of Enron dataset: " + str(num_people))
     num_features = [len(v) for v in enron_data.itervalues()]
     num_features = list(dict.fromkeys(num_features))
     print("Total features in Enron dataset: " + str(num_features))
     features_list = [v for v in enron_data.itervalues()][0].keys()
-    print("Features: " + str(features_list))
+    print("Features:")
+    for f in features_list:
+        print("\t"+f)
 
+    poi_list = poiEmails()
+    # print(len(poi_list))
+
+def persons_of_interest(enron_data):
     poi_count = 0
     for person in enron_data:
         # print("Name: " + person)
@@ -41,12 +44,8 @@ def data_info():
 
     print("Total POI: " + str(poi_count))
 
-    poi_list = poiEmails()
-    # print(len(poi_list))
 
-data_info()
-
-def queries():
+def single_queries(enron_data):
     stock_val = enron_data["PRENTICE JAMES"]["total_stock_value"]
     print("Stock value for James Prentice: " + str(stock_val))
 
@@ -57,4 +56,14 @@ def queries():
     print("Stock options exercised by Jeffrey K Skilling: " + str(stock_options))
 
 
-queries()
+def main():
+    enron_data = pickle.load(open("../../ud120-projects/final_project/final_project_dataset.pkl", "rb"))
+    # print(enron_data)
+    print("---- dataset information ----")
+    data_info(enron_data)
+    print("\n---- dataset queries ----")
+    persons_of_interest(enron_data)
+    single_queries(enron_data)
+
+if __name__ == "__main__":
+    main()
