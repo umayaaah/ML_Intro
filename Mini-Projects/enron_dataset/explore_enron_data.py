@@ -55,6 +55,20 @@ def single_queries(enron_data):
     stock_options = enron_data["SKILLING JEFFREY K"]["exercised_stock_options"]
     print("Stock options exercised by Jeffrey K Skilling: " + str(stock_options))
 
+def top_payment(enron_data, persons):
+    top = 0
+    name = ""
+    for p in persons:
+        t_pay = (enron_data[p]["total_payments"])
+        if(t_pay>top):
+            top = t_pay
+            name = p
+        print(p + " - Total payments: " + str(t_pay))
+
+    print("Top payment of $" + str(top) + " to " + name)
+    
+
+
 
 def main():
     enron_data = pickle.load(open("../../ud120-projects/final_project/final_project_dataset.pkl", "rb"))
@@ -64,6 +78,7 @@ def main():
     print("\n---- dataset queries ----")
     persons_of_interest(enron_data)
     single_queries(enron_data)
+    top_payment(enron_data, ["SKILLING JEFFREY K", "FASTOW ANDREW S", "LAY KENNETH L"])
 
 if __name__ == "__main__":
     main()
