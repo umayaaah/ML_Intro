@@ -42,8 +42,7 @@ def persons_of_interest(enron_data):
         if poi_flag:
             poi_count += 1
 
-    print("Total POI: " + str(poi_count))
-
+    print("Total persons of interest: " + str(poi_count))
 
 def single_queries(enron_data):
     stock_val = enron_data["PRENTICE JAMES"]["total_stock_value"]
@@ -67,8 +66,22 @@ def top_payment(enron_data, persons):
 
     print("Top payment of $" + str(top) + " to " + name)
     
+def all_salaries(enron_data):
+    salaries = []
+    for person in enron_data:
+        s = enron_data[person]["salary"]
+        if isinstance(s, int):
+            salaries.append(s)
+    # print(salaries)
+    print("Salary info available for " + str(len(salaries)) + " people in the dataset")
 
-
+def all_emails(enron_data):
+    emails = []
+    for person in enron_data:
+        e = enron_data[person]["email_address"]
+        if e != "NaN":
+            emails.append(e)
+    print("Email info available for " + str(len(emails)) + " people in the dataset")
 
 def main():
     enron_data = pickle.load(open("../../ud120-projects/final_project/final_project_dataset.pkl", "rb"))
@@ -79,6 +92,8 @@ def main():
     persons_of_interest(enron_data)
     single_queries(enron_data)
     top_payment(enron_data, ["SKILLING JEFFREY K", "FASTOW ANDREW S", "LAY KENNETH L"])
+    all_salaries(enron_data)
+    all_emails(enron_data)
 
 if __name__ == "__main__":
     main()
