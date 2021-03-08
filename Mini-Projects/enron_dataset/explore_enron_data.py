@@ -1,20 +1,16 @@
 #!/usr/bin/python
 
 from poi_email_addresses import poiEmails
+from feature_format import featureFormat
 
 """ 
-    Starter code for exploring the Enron dataset (emails + finances);
+    Exploring the Enron dataset (emails + finances);
     loads up the dataset (pickled dict of dicts).
 
     The dataset has the form:
     enron_data["LASTNAME FIRSTNAME MIDDLEINITIAL"] = { features_dict }
 
     {features_dict} is a dictionary of features associated with that person.
-    You should explore features_dict as part of the mini-project,
-    but here's an example to get you started:
-
-    enron_data["SKILLING JEFFREY K"]["bonus"] = 5600000
-    
 """
 
 import pickle
@@ -83,6 +79,13 @@ def all_emails(enron_data):
             emails.append(e)
     print("Email info available for " + str(len(emails)) + " people in the dataset")
 
+def name_exists(enron_data, name):
+    name = name.upper()
+    if name in enron_data.keys():
+        print(name + " exists in dataset")
+    else:
+        print(name + " does not exist in dataset")
+
 def main():
     enron_data = pickle.load(open("../../ud120-projects/final_project/final_project_dataset.pkl", "rb"))
     # print(enron_data)
@@ -90,6 +93,7 @@ def main():
     data_info(enron_data)
     print("\n---- dataset queries ----")
     persons_of_interest(enron_data)
+    name_exists(enron_data, "KRAUTZ MICHAEL")
     single_queries(enron_data)
     top_payment(enron_data, ["SKILLING JEFFREY K", "FASTOW ANDREW S", "LAY KENNETH L"])
     all_salaries(enron_data)
