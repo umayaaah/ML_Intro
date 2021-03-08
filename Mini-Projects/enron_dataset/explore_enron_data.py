@@ -31,6 +31,7 @@ def data_info(enron_data):
 
 def persons_of_interest(enron_data):
     poi_count = 0
+    poi = []
     for person in enron_data:
         # print("Name: " + person)
         poi_flag = enron_data[person]["poi"]
@@ -79,6 +80,17 @@ def all_emails(enron_data):
             emails.append(e)
     print("Email info available for " + str(len(emails)) + " people in the dataset")
 
+def check_nan(enron_data, key, poi_flag):
+    count = 0
+    for person in enron_data:
+        if enron_data[person][key] == "NaN":
+            if (not poi_flag):
+                count += 1  
+            elif (poi_flag and enron_data[person]["poi"]):
+                count += 1
+    print("Total NaN found for " + key + ": " + str(count))
+
+
 def name_exists(enron_data, name):
     name = name.upper()
     if name in enron_data.keys():
@@ -98,6 +110,7 @@ def main():
     top_payment(enron_data, ["SKILLING JEFFREY K", "FASTOW ANDREW S", "LAY KENNETH L"])
     all_salaries(enron_data)
     all_emails(enron_data)
+    check_nan(enron_data, "total_payments", poi_flag=True)
 
 if __name__ == "__main__":
     main()
