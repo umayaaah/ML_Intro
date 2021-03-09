@@ -4,7 +4,6 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 
 from scipy.spatial import distance
-import random
 
 def euc_distance(x, y):
     return distance.euclidean(x, y)
@@ -24,13 +23,13 @@ class MyKNNClassifier():
     def closest(self, row):
         best_dist = euc_distance(row, self.features_train[0])
         best_idx = 0
-
+        print("Best distance: " + str(best_dist))
         for i in range(1, len(self.features_train)):
-            print("Best distance: " + str(best_dist))
+            # print("Best distance: " + str(best_dist))
             dist = euc_distance(row, self.features_train[i])
-            print("New distance: " + str(dist))
+            # print("New distance: " + str(dist))
             if dist < best_dist:
-                print("Improvement, New distance: " + str(dist))
+                print("Improvement! New distance: " + str(dist))
                 best_dist = dist
                 best_idx = i
 
