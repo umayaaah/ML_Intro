@@ -18,7 +18,7 @@ def plot_graph(clf, X_train, y_train, X_test, y_test, x_label, y_label):
     plt.scatter(X_train, y_train, color="b", label="training data")
     plt.scatter(X_test, y_test, color="r", label="test data")
     plt.plot(X_test, pred, color="black")
-    plt.legen(loc=2)
+    plt.legend(loc=2)
     plt.xlabel(x_label)
     plt.ylabel(y_label)
 
