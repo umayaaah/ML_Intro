@@ -2,7 +2,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 import matplotlib 
-matplotlib.use('agg')
+# matplotlib.use('agg')
 
 import matplotlib.pyplot as plt
 
@@ -21,8 +21,8 @@ def plot_graph(clf, X_train, y_train, X_test, y_test, x_label, y_label):
     plt.legend(loc=2)
     plt.xlabel(x_label)
     plt.ylabel(y_label)
-
     plt.savefig("test.png")
+    plt.show()
     
 import base64
 import json
