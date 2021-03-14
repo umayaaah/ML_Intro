@@ -3,3 +3,4 @@ ud120-projects
 .vscode
 *.pyc
 __pycache__/
+emails_by_address/
