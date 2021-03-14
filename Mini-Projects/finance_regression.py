@@ -13,7 +13,8 @@ from feature_format import featureFormat, targetFeatureSplit
 dictionary = pickle.load( open("../tools/final_project/final_project_dataset_modified.pkl", "r") )
 
 ### list the features you want to look at--first item in the list will be the "target" feature
-### will be using salary to predict the bonus
+### using salary to predict the bonus - r squared score: -1.485
+### using long_term_incentive to predict the bonus - r squared score: -0.593
 features_list = ["bonus", "salary"]
 data = featureFormat( dictionary, features_list, remove_any_zeroes=True, sort_keys = '../tools/python2_lesson06_keys.pkl')
 target, features = targetFeatureSplit( data )
@@ -27,12 +28,35 @@ test_color = "r"
 
 ### create and fit training set to regression
 from sklearn.linear_model import LinearRegression
-reg = LinearRegression()
-reg = reg.fit(feature_train, target_train)
 
-print("Slope: {0}".format(reg.coef_))
-print("Intercept: {0}".format(reg.intercept_))
+def fit_train():
+    reg = LinearRegression()
+    reg.fit(feature_train, target_train)
+    acc = reg.score(feature_test, target_test)
+    print("r-squared score: {0}".format(acc))
+    
+    return reg
 
+def fit_test():
+    reg = LinearRegression()
+    reg.fit(feature_test, target_test)
+    acc = reg.score(feature_train, target_train)
+    print("r-squared score: {0}".format(acc))
+    
+    return reg
+
+def reg_info(reg):
+    print("Slope: {0}".format(reg.coef_))
+    print("Intercept: {0}".format(reg.intercept_))
+
+print("---Regression on training set with outlier---")
+reg_train = fit_train()
+reg_info(reg_train)
+
+print("\n---Regression on testing set without outlier---")
+reg_test = fit_test()
+reg_info(reg_test)
+print("\n")
 
 ### draw the scatterplot, with color-coded training and testing points
 import matplotlib.pyplot as plt
@@ -50,9 +74,12 @@ plt.scatter(feature_test[0], target_test[0], color=train_color, label="train")
 
 ### draw the regression line, once it's coded
 try:
-    plt.plot( feature_test, reg.predict(feature_test) )
+    plt.plot( feature_test, reg_train.predict(feature_test) )
+    plt.plot(feature_train, reg_test.predict(feature_train), color="g")
 except NameError:
     pass
+
+
 plt.xlabel(features_list[1])
 plt.ylabel(features_list[0])
 plt.legend()
