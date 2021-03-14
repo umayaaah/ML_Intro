@@ -30,14 +30,15 @@ from sklearn.linear_model import LinearRegression
 reg = LinearRegression()
 reg.fit(ages_train, net_worths_train)
 
-print("Slope: {0}".format(reg.coef_))
-print("Intercept: {0}".format(reg.intercept_))
-acc = reg.score(ages_test, net_worths_test)
-print("r-squared score: {0}".format(acc))
-print("\n\n")
+def reg_info(reg):
+    print("Slope: {0}".format(reg.coef_))
+    print("Intercept: {0}".format(reg.intercept_))
+    acc = reg.score(ages_test, net_worths_test)
+    print("r-squared score: {0}".format(acc))
+    print("\n\n")
 
-
-
+print("--- Regression info with outliers ---")
+reg_info(reg)
 
 try:
     plt.plot(ages, reg.predict(ages), color="blue")
@@ -46,7 +47,7 @@ except NameError:
 plt.scatter(ages, net_worths)
 plt.xlabel("ages")
 plt.ylabel("net worths")
-plt.show()
+# plt.show()
 
 
 ### identify and remove the most outlier-y points
@@ -70,7 +71,9 @@ if len(cleaned_data) > 0:
     ### refit cleaned data
     try:
         reg.fit(ages, net_worths)
-        plt.plot(ages, reg.predict(ages), color="blue")
+        print("--- Regression info with 10% highest residual error removed ---")
+        reg_info(reg)
+        plt.plot(ages, reg.predict(ages), color="red")
     except NameError:
         print "you don't seem to have regression imported/created,"
         print "   or else your regression object isn't named reg"
