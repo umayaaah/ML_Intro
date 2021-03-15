@@ -13,7 +13,6 @@ from feature_format import featureFormat, targetFeatureSplit
 
 def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature 1", f2_name="feature 2"):
     """ plot graph to visualize clusters """
-
     ### plot each cluster with a different color--add more colors for
     ### drawing more than five clusters
     colors = ["b", "c", "k", "m", "g"]
@@ -28,7 +27,7 @@ def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature
     plt.ylabel(f2_name)
     plt.savefig(name)
     # plt.show()
-    plt.close()
+    # plt.close()
 
 
 
@@ -40,15 +39,16 @@ data_dict.pop("TOTAL", 0)
 
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
+feature_3 = "total_payments"
 
 poi  = "poi"
-features_list = [poi, feature_1, feature_2]
+features_list = [poi, feature_1, feature_2, feature_3]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
 
 ### clustering with n features 
-for f1, f2 in finance_features:
-    plt.scatter( f1, f2 )
+for f1, f2, f3 in finance_features:
+    plt.scatter( f1, f2)
 
 # plt.show()
 
@@ -64,6 +64,6 @@ pred = km.predict(finance_features)
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
 try:
-    Draw(pred, finance_features, poi, mark_poi=False, name="clusters.png", f1_name=feature_1, f2_name=feature_2)
+    Draw(pred, finance_features, poi, mark_poi=False, name="3feature-clusters.png", f1_name=feature_1, f2_name=feature_2)
 except NameError:
     print "no predictions object named pred found, no clusters to plot"
