@@ -5,7 +5,7 @@
 """
 
 import pickle
-import numpy
+import numpy as np
 import matplotlib.pyplot as plt
 import sys
 sys.path.append("../tools/")
@@ -49,20 +49,35 @@ def feature_range(feature):
 feature_range("exercised_stock_options")
 feature_range("salary")
 
-exit(1)
-
+def feature_scaler(feature_arr):
+    nozero_arr = np.ma.masked_equal(feature_arr, 0.0, copy=False)
+    min_val = np.min(nozero_arr)
+    max_val = np.max(nozero_arr)
+    if(min_val == max_val):
+        return feature_arr
+    
+    scaled_feature = []
+    
+    for x in feature_arr:
+        x = float(x)
+        rescale_x = (x - min_val)/(max_val - min_val)
+        scaled_feature.append(rescale_x)
+    
+    return scaled_feature
 
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
 feature_3 = "total_payments"
 
 poi  = "poi"
-features_list = [poi, feature_1, feature_2, feature_3]
+features_list = [poi, feature_1, feature_2]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
 
+# finance_features = feature_scaler(finance_features)
+
 ### clustering with n features 
-for f1, f2, f3 in finance_features:
+for f1, f2 in finance_features:
     plt.scatter( f1, f2)
 
 # plt.show()
