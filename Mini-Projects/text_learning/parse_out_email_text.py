@@ -27,28 +27,29 @@ def parseOutText(f):
         ### remove punctuation
         text_string = content[1].translate(str.maketrans({key: None for key in string.punctuation}))
 
-        print("Email body before stemming: ")
-        print(text_string)
+        # print("Email body before stemming: ")
+        # print(text_string)
 
         # words = text_string
         stemmer = SnowballStemmer("english")
 
         # convert string into a list of words and stripping new line tokens 
-        words = text_string.strip("\n").split(" ")
-        # stem each word in the list (ignoring whitespace) and return new list of stemmed words
-        words = [stemmer.stem(w) for w in words if w != ""]
+        words = text_string.split(" ")
+        # stem each word in the list (ignoring whitespace and new lines) and return new list of stemmed words
+        words = [stemmer.stem(w.replace("\n", " ")) for w in words if w != ""]
         # join the list on a space to create a sentence of newly stemmed words
         words = " ".join(words)
+
+        words = " ".join(words.split())
         
     return words
 
     
-
 def main():
     ff = open("test_email.txt", "r")
     text = parseOutText(ff)
     print("Email body after stemming:\n")
-    print(text)
+    print(text + "\n")
 
 
 
